@@ -10,8 +10,10 @@ object OEECalculator {
     val sparkSession = createSparkSession
     sparkSession.sparkContext.setLogLevel("ERROR")
 
-    //run oee calculation and simulation of sending messages by the machine in parallel
+    //---run oee calculation along with machine message sending simulation
+    //-----run oee calculation
     val dataGeneratorThread = new Thread(new MachineDataGenerator)
+    //-----simulate machine output kafka messages
     val oEECalculatorThread = new Thread(new OEECalculationRunner(sparkSession))
     oEECalculatorThread.getPriority
     oEECalculatorThread.start()
